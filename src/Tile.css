@@ -1,0 +1,65 @@
+.Tile {
+    display: block;
+}
+
+input[type=number] {
+    height: 50px;
+    width: 50px;
+    display: block;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    text-align: center;
+    font-size: 25px;
+    border: none;
+    
+}
+
+input[type=number]:disabled {
+    background: #f5f6fc;
+    color: red;
+
+}
+
+
+
+.Tile:nth-of-type(3n) > input {
+    border-right: 1px solid black;
+}
+
+.Tile:nth-of-type(27n + 1) > input,
+.Tile:nth-of-type(27n + 2) > input, 
+.Tile:nth-of-type(27n + 3) > input,
+.Tile:nth-of-type(27n + 4) > input,
+.Tile:nth-of-type(27n + 5) > input,
+.Tile:nth-of-type(27n + 6) > input,
+.Tile:nth-of-type(27n + 7) > input,
+.Tile:nth-of-type(27n + 8) > input,
+.Tile:nth-of-type(27n + 9) > input {
+    border-top: 1px solid black;
+}
+
+.Tile:nth-of-type(27n - 1) > input,
+.Tile:nth-of-type(27n - 2) > input, 
+.Tile:nth-of-type(27n - 3) > input,
+.Tile:nth-of-type(27n - 4) > input,
+.Tile:nth-of-type(27n - 5) > input,
+.Tile:nth-of-type(27n - 6) > input,
+.Tile:nth-of-type(27n - 7) > input,
+.Tile:nth-of-type(27n - 8) > input,
+.Tile:nth-of-type(27n - 0) > input {
+    border-bottom: 1px solid black;
+}
+
+.Tile:nth-of-type(3n+1) > input {
+    border-left: 1px solid black;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
