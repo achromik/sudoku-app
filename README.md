@@ -2,10 +2,10 @@
 
 ## Features list
  - [x] Basic features
- - [ ] Solve
- - [ ] highlight columns, rows and sectors when a tile is updated
- - [ ] highlight errors on columns, rows, and sectors
- - [ ] typing in square candidate values
+ - [x] Solve
+ - [x] highlight corespoding column, row and square when a tile is selected
+ - [ ] highlight errors on a column, row, and in a square
+ - [ ] typing in a tile candidate values
  - [ ] select difficulty when starts a new game 
 
 
