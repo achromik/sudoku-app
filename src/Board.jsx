@@ -30,7 +30,6 @@ class Board extends Component {
                             value={item === '.' ? '' : item}
                             disabled={this.isInitialNumber(index, item)}
                             onChange={(e) => this.props.onChange(index, e.target.value)}
-
                         />
                     )
                 }

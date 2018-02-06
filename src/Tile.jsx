@@ -11,7 +11,6 @@ const Tile = (props) => {
                 value={props.value}
                 disabled={props.disabled}
                 onChange={ props.onChange}
-                
             />
         </div>
     );

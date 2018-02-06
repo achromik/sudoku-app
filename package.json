@@ -1,6 +1,7 @@
 {
   "name": "sudoku-app",
   "version": "0.1.0",
+  "homepage" : "http://achromik.github.io/sudoku-app",
   "private": true,
   "dependencies": {
     "react": "^16.2.0",

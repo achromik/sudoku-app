@@ -19,19 +19,15 @@ class App extends Component {
 		this.solveGame = this.solveGame.bind(this);
 	}
 
-
 	componentWillMount() {
 		this.generateSudoku();
 	}
 
-
 	inputNumber(id, number) {
-
 		number = number ? number % 10 : '.';
 		const currentBoard = this.state.board;
 		const begining = currentBoard.substring(0, id);
 		const ending = currentBoard.substring(id + 1, 81);
-
 		const board = "" + begining + number + ending;
 
 		this.setState({
@@ -47,38 +43,25 @@ class App extends Component {
 			initialBoard,
 			board: initialBoard,
 			solvedSudoku,
-			isErrors: false
-
+			isErrors: false,
+			showErrorsInfo: false
 		});
 	}
 
 	checkSudoku() {
-		const solvedSudoku = this.state.solvedSudoku;
-		const boardArray = Array.from(this.state.board);
-		const status = Array.from(solvedSudoku).reduce((obj, item, index) => {
-			if (item !== boardArray[index] && boardArray[index] !== '.') {
-				obj['bad']++;
-			} else {
-				obj['ok']++;
-			}
-			return obj;
-		}, {
-				ok: 0,
-				bad: 0
-			});
+		const isSolvable = sudoku.solve(this.state.board) === false ? false : true;
 
 		this.setState({
-			isErrors: true,
-			errorsCounter: status.bad
+			isErrors: !isSolvable,
+			showErrorsInfo: true
 		});
 	}
 
-	printCheckStatus() {
-
-		return this.state.isErrors
-			? this.state.errorsCounter > 0
-				? <p>Found {this.state.errorsCounter} errors!</p>
-				: <p>No errors found!</p>
+	showCheckStatus() {
+		return this.state.showErrorsInfo ?
+			this.state.isErrors
+				? <p>There is at least one error!</p>
+				: <p>Extra! No errors!</p>
 			: null;
 	}
 
@@ -90,7 +73,7 @@ class App extends Component {
 
 	solveGame() {
 		this.setState({
-			board: sudoku.solve(this.state.initialBoard)
+			board: sudoku.solve(this.state.board) ? sudoku.solve(this.state.board) : sudoku.solve(this.state.initialBoard)
 		});
 	}
 
@@ -98,26 +81,23 @@ class App extends Component {
 		return (
 			<div
 				className="App"
-
 			>
 				<h1>Sudoku App</h1>
 				<Board
 					initialBoard={this.state.initialBoard}
 					sudoku={this.state.board}
 					onChange={this.inputNumber}
-					onClick={() => this.setState({ isErrors: false })}
+					onClick={() => this.setState({ showErrorsInfo: false })}
 				/>
 				<div className="controls">
 					<button onClick={this.checkSudoku}>Check</button>
 					<button onClick={this.generateSudoku}>New Game</button>
 					<button onClick={this.solveGame}>Solve</button>
-					<button onClick={this.resetGame}>Restart</button> 
-
+					<button onClick={this.resetGame}>Restart</button>
 				</div>
 				<div className="status">
 					{
-						this.printCheckStatus()
-
+						this.showCheckStatus()
 					}
 				</div>
 			</div>
