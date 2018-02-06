@@ -19,16 +19,15 @@ class Board extends Component {
 
 
     render() {
-        // console.log(this.props.sudoku.slice(''));
         return (
-            <div className="Board">
+            <div className="Board"
+                onClick={this.props.onClick}>
                 {
-                    console.log(this.props.sudoku)}{
                     Array.from(this.props.sudoku).map((item, index) =>
                         <Tile
                             key={index}
                             id={index}
-                            value={item}
+                            value={item === '.' ? '' : item}
                             disabled={this.isInitialNumber(index, item)}
                             onChange={(e) => this.props.onChange(index, e.target.value)}
 

@@ -15,6 +15,8 @@ class App extends Component {
 		this.inputNumber = this.inputNumber.bind(this);
 		this.generateSudoku = this.generateSudoku.bind(this);
 		this.checkSudoku = this.checkSudoku.bind(this);
+		this.resetGame = this.resetGame.bind(this);
+		this.solveGame = this.solveGame.bind(this);
 	}
 
 
@@ -24,7 +26,8 @@ class App extends Component {
 
 
 	inputNumber(id, number) {
-		number = number ? number : '.';
+
+		number = number ? number % 10 : '.';
 		const currentBoard = this.state.board;
 		const begining = currentBoard.substring(0, id);
 		const ending = currentBoard.substring(id + 1, 81);
@@ -32,7 +35,8 @@ class App extends Component {
 		const board = "" + begining + number + ending;
 
 		this.setState({
-			board
+			board,
+			isErrors: false,
 		});
 	}
 
@@ -50,7 +54,6 @@ class App extends Component {
 
 	checkSudoku() {
 		const solvedSudoku = this.state.solvedSudoku;
-		console.log(solvedSudoku);
 		const boardArray = Array.from(this.state.board);
 		const status = Array.from(solvedSudoku).reduce((obj, item, index) => {
 			if (item !== boardArray[index] && boardArray[index] !== '.') {
@@ -71,32 +74,44 @@ class App extends Component {
 	}
 
 	printCheckStatus() {
-		setTimeout(() => {
-			this.setState({
-				isErrors: false
-			});
-		}, 1500);
+
 		return this.state.isErrors
-			? this.state.errors > 0
+			? this.state.errorsCounter > 0
 				? <p>Found {this.state.errorsCounter} errors!</p>
 				: <p>No errors found!</p>
 			: null;
 	}
 
+	resetGame() {
+		this.setState({
+			board: this.state.initialBoard
+		});
+	}
+
+	solveGame() {
+		this.setState({
+			board: sudoku.solve(this.state.initialBoard)
+		});
+	}
+
 	render() {
 		return (
-			<div className="App">
+			<div
+				className="App"
+
+			>
 				<h1>Sudoku App</h1>
 				<Board
 					initialBoard={this.state.initialBoard}
 					sudoku={this.state.board}
 					onChange={this.inputNumber}
+					onClick={() => this.setState({ isErrors: false })}
 				/>
 				<div className="controls">
 					<button onClick={this.checkSudoku}>Check</button>
 					<button onClick={this.generateSudoku}>New Game</button>
-					<button onClick={null}>Solve</button>
-					<button onClick={null}>Restart</button>
+					<button onClick={this.solveGame}>Solve</button>
+					<button onClick={this.resetGame}>Restart</button> 
 
 				</div>
 				<div className="status">

@@ -2,7 +2,6 @@ body {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
 
-    /* -ms-grid-column:  */
 }
 
 #root {
@@ -32,3 +31,21 @@ body {
     box-shadow: 0 0 4px #ffc600;
 }
 
+
+@media (max-width: 500px) {
+    .App {
+        grid-gap: 15px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .controls {
+        grid-gap: 15px;
+    }
+
+    .controls > button {
+        font-size: 13px;
+    }
+}
