@@ -11,16 +11,30 @@ class App extends Component {
 			initialBoard: '',
 			board: '',
 			solvedSudoku: '',
+			showErrorsInfo: false,
+			isErrors: false,
+			isDisabledCheckButton: true,
+			isDisabledSolveButton: true,
+			isDisabledRestartButton: true,
+			selectedTile: -1,
 		};
 		this.inputNumber = this.inputNumber.bind(this);
 		this.generateSudoku = this.generateSudoku.bind(this);
 		this.checkSudoku = this.checkSudoku.bind(this);
 		this.resetGame = this.resetGame.bind(this);
 		this.solveGame = this.solveGame.bind(this);
+		this.handleSelectTile = this.handleSelectTile.bind(this);
 	}
 
 	componentWillMount() {
-		this.generateSudoku();
+		this.generateEmptySudoku();
+	}
+
+	generateEmptySudoku() {
+		this.setState({
+			board: ' '.repeat(81),
+			isDummyBoard: true,
+		});
 	}
 
 	inputNumber(id, number) {
@@ -31,25 +45,29 @@ class App extends Component {
 		const board = "" + begining + number + ending;
 
 		this.setState({
-			board,
-			isErrors: false,
+			board
 		});
+
 	}
 
 	generateSudoku() {
+		
 		const initialBoard = sudoku.generate('easy');
 		const solvedSudoku = sudoku.solve(initialBoard);
 		this.setState({
 			initialBoard,
 			board: initialBoard,
 			solvedSudoku,
-			isErrors: false,
-			showErrorsInfo: false
+			isDisabledCheckButton: false,
+			isDisabledSolveButton: false,
+			isDisabledRestartButton: false,
+			isDummyBoard: false,
 		});
+		
 	}
 
 	checkSudoku() {
-		const isSolvable = sudoku.solve(this.state.board) === false ? false : true;
+		const isSolvable = sudoku.solve(this.state.board) !== false ? true : false;
 
 		this.setState({
 			isErrors: !isSolvable,
@@ -77,23 +95,52 @@ class App extends Component {
 		});
 	}
 
+	handleSelectTile(id) {
+        this.setState({
+			selectedTile: id
+		});
+	}
+	
 	render() {
 		return (
 			<div
 				className="App"
+				onClick={(e) => console.log(e.target)}
 			>
 				<h1>Sudoku App</h1>
 				<Board
+					dummy={this.state.isDummyBoard}
 					initialBoard={this.state.initialBoard}
 					sudoku={this.state.board}
 					onChange={this.inputNumber}
 					onClick={() => this.setState({ showErrorsInfo: false })}
+					handleSelectTile={this.handleSelectTile}
+					selectedTile={this.state.selectedTile}
 				/>
 				<div className="controls">
-					<button onClick={this.checkSudoku}>Check</button>
-					<button onClick={this.generateSudoku}>New Game</button>
-					<button onClick={this.solveGame}>Solve</button>
-					<button onClick={this.resetGame}>Restart</button>
+					<button
+						onClick={this.checkSudoku}
+						disabled={this.state.isDisabledCheckButton}
+					>
+						Check
+					</button>
+					<button
+						onClick={this.generateSudoku}
+						>
+						New Game
+					</button>
+					<button
+						onClick={this.solveGame}
+						disabled={this.state.isDisabledSolveButton}
+						>
+						Solve
+					</button>
+					<button
+						onClick={this.resetGame}
+						disabled={this.state.isDisabledRestartButton}
+					>
+						Restart
+					</button>
 				</div>
 				<div className="status">
 					{

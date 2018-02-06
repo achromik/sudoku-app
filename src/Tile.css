@@ -13,6 +13,7 @@ input[type=number] {
     border: none;
     caret-color: transparent;
     font-weight: 600;
+    transition: background .3s;
 }
 
 input[type=number]:disabled {
@@ -22,9 +23,12 @@ input[type=number]:disabled {
     font-size: 22px;
 }
 
-input[type=number]:focus,
-input[type=number]:active {
-    background-color: #FFc600;
+.hl > input {
+    background: rgb(206, 223, 245)!important;
+}
+
+.selected input[type=number] {
+    background-color: #FFc600!important;
     color: white;
     font-weight: 900;
 }
@@ -70,6 +74,23 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
     cursor: pointer;
+}
+
+/* 
+input.dummy[type=number],
+input.dummy[type=number]:disabled,
+input.dummy[type=number]:focus,
+input.dummy[type=number]:active {
+    background-color: white;
+    cursor: default;
+} */
+
+.dummy[type=number],
+.dummy[type=number]:disabled,
+.dummy[type=number]:focus,
+.dummy[type=number]:active {
+    background-color: white;
+    cursor: default;
 }
 
 @media (max-width: 500px) {
