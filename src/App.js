@@ -38,7 +38,12 @@ class App extends Component {
 	}
 
 	inputNumber(id, number) {
-		number = number ? number % 10 : '.';
+		//validating if number between 1 and 9
+		number = number 
+			? number % 10 > 0
+				? number % 10
+				: '.'
+			: '.';
 		const currentBoard = this.state.board;
 		const begining = currentBoard.substring(0, id);
 		const ending = currentBoard.substring(id + 1, 81);
@@ -105,9 +110,9 @@ class App extends Component {
 		return (
 			<div
 				className="App"
-				onClick={(e) => console.log(e.target)}
 			>
 				<h1>Sudoku App</h1>
+				
 				<Board
 					dummy={this.state.isDummyBoard}
 					initialBoard={this.state.initialBoard}
@@ -147,6 +152,7 @@ class App extends Component {
 						this.showCheckStatus()
 					}
 				</div>
+				
 			</div>
 		);
 	}

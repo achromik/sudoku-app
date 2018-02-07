@@ -2,7 +2,7 @@
     display: block;
 }
 
-input[type=number] {
+input[type=tel] {
     height: 50px;
     width: 50px;
     display: block;
@@ -16,9 +16,9 @@ input[type=number] {
     transition: background .3s;
 }
 
-input[type=number]:disabled {
+input[type=tel]:disabled {
     background: #f5f6fc;
-    color: red;
+    color: rgb(124, 119, 119);
     cursor: not-allowed;
     font-size: 22px;
 }
@@ -27,7 +27,7 @@ input[type=number]:disabled {
     background: rgb(206, 223, 245)!important;
 }
 
-.selected input[type=number] {
+.selected input[type=tel] {
     background-color: #FFc600!important;
     color: white;
     font-weight: 900;
@@ -65,36 +65,36 @@ input[type=number]:disabled {
     border-left: 1px solid black;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type=tel]::-webkit-inner-spin-button,
+input[type=tel]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-input[type=number] {
+input[type=tel] {
     -moz-appearance: textfield;
     cursor: pointer;
 }
 
 /* 
-input.dummy[type=number],
-input.dummy[type=number]:disabled,
-input.dummy[type=number]:focus,
-input.dummy[type=number]:active {
+input.dummy[type=tel],
+input.dummy[type=tel]:disabled,
+input.dummy[type=tel]:focus,
+input.dummy[type=tel]:active {
     background-color: white;
     cursor: default;
 } */
 
-.dummy[type=number],
-.dummy[type=number]:disabled,
-.dummy[type=number]:focus,
-.dummy[type=number]:active {
+.dummy[type=tel],
+.dummy[type=tel]:disabled,
+.dummy[type=tel]:focus,
+.dummy[type=tel]:active {
     background-color: white;
     cursor: default;
 }
 
 @media (max-width: 500px) {
-    input[type=number] {
+    input[type=tel] {
         height: 34px;
         width: 34px;
     }

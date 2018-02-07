@@ -36,6 +36,14 @@ class Board extends Component {
         }
     }
 
+    // validateInputHandler(index, e) {
+    //     if ((e.keyCode >= 49 && e.keyCode <= 57) || (parseInt(e.key, 10) >= 1 && parseInt(e.key, 10) <= 9)) {
+    //         this.props.onChange(index, e.key);
+    //     } else if( e.keyCode === 48 || e.keyCode=== 32 || e.keyCode === 8 ) {
+    //         this.props.onChange(index, '.');
+    //     }
+    // }
+
 
     render() {
         if (this.props.dummy) {
@@ -48,7 +56,7 @@ class Board extends Component {
                             <Tile
                                 dummy="dummy"
                                 key={index}
-                                value='.'
+                                value=''
                                 disabled={true}
                             />
                         )
@@ -60,7 +68,8 @@ class Board extends Component {
 
             return (
                 <div className="Board"
-                    onClick={this.props.onClick}>
+                    onClick={this.props.onClick}
+                >
                     {
                         Array.from(this.props.sudoku).map((item, index) =>
                             <Tile
@@ -69,9 +78,11 @@ class Board extends Component {
                                 highlighted={this.isHighlighted(index, this.props.selectedTile)}
                                 value={item === '.' ? '' : item}
                                 disabled={this.isInitialNumber(index, item)}
-                                onChange={(e) => this.props.onChange(index, e.target.value)}
+                                onChange={(e) => this.props.onChange(index, e.target.value) }
                                 onClick={() => this.props.handleSelectTile(index)}
                                 selected={this.isSelected(index, this.props.selectedTile)}
+                            onMouseEnter ={() => this.props.handleSelectTile(index)}
+                            // onMouseLeave={() => this.props.handleSelectTile(-1)}
                             />
                         )
                     }
