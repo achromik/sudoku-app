@@ -1,6 +1,9 @@
 body {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
+    background: linear-gradient(to left top, #0120ffad, #ea6af9b3),  url('./img/gplaypattern.png');
+    height: 100vh;
+
 }
 
 #root {
@@ -9,11 +12,12 @@ body {
 
 .App {
     display: grid;
-    grid-template-rows: 1fr auto 30px;
+    grid-template-rows: 1fr auto 50px 30px;
     grid-gap: 20px;
     justify-items: center;
 }
 
+.controls.visible,
 .controls {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -28,6 +32,21 @@ body {
     font-size: 16px;
     font-weight: bold;
     box-shadow: 0 0 4px #ffc801, 2px 2px 4px rgb(53, 53, 53);
+    transition: .4s
+}
+
+.controls > button:hover {
+    background: #7bc500;
+    box-shadow: 0 0 4px #7bc500, 2px 2px 4px rgb(53, 53, 53);
+}
+
+
+.controls.hidden {
+    display: none;
+}
+
+.status {
+    align-self: center;
 }
 
 @media (max-width: 500px) {
@@ -47,3 +66,5 @@ body {
         font-size: 13px;
     }
 }
+
+

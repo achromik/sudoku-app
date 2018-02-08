@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Board from './Board.jsx';
 import sudoku from 'sudoku-umd';
+import Levels from './Levels';
+import Controls from './Controls';
 
 
 class App extends Component {
@@ -17,6 +19,8 @@ class App extends Component {
 			isDisabledSolveButton: true,
 			isDisabledRestartButton: true,
 			selectedTile: -1,
+			showLevels: false,
+			showControls: true,
 		};
 		this.inputNumber = this.inputNumber.bind(this);
 		this.generateSudoku = this.generateSudoku.bind(this);
@@ -24,6 +28,8 @@ class App extends Component {
 		this.resetGame = this.resetGame.bind(this);
 		this.solveGame = this.solveGame.bind(this);
 		this.handleSelectTile = this.handleSelectTile.bind(this);
+		this.showLevelsOption = this.showLevelsOption.bind(this);
+		this.hideErrorsInfo = this.hideErrorsInfo.bind(this);
 	}
 
 	componentWillMount() {
@@ -39,7 +45,7 @@ class App extends Component {
 
 	inputNumber(id, number) {
 		//validating if number between 1 and 9
-		number = number 
+		number = number
 			? number % 10 > 0
 				? number % 10
 				: '.'
@@ -55,9 +61,24 @@ class App extends Component {
 
 	}
 
-	generateSudoku() {
-		
-		const initialBoard = sudoku.generate('easy');
+	generateSudoku(level) {
+		let initialBoard;
+		switch (level) {
+			case 0:
+				initialBoard = sudoku.generate('easy');
+				break;
+			case 1:
+				initialBoard = sudoku.generate('medium');
+				break;
+			case 2:
+				initialBoard = sudoku.generate('hard');
+				break;
+			case 3:
+				initialBoard = sudoku.generate('very-hard');
+				break;
+			default:
+				initialBoard = sudoku.generate('medium');
+		}
 		const solvedSudoku = sudoku.solve(initialBoard);
 		this.setState({
 			initialBoard,
@@ -67,8 +88,10 @@ class App extends Component {
 			isDisabledSolveButton: false,
 			isDisabledRestartButton: false,
 			isDummyBoard: false,
+			selectedTile: -1,
+			showLevels: false,
+			showControls: true,
 		});
-		
 	}
 
 	checkSudoku() {
@@ -101,58 +124,58 @@ class App extends Component {
 	}
 
 	handleSelectTile(id) {
-        this.setState({
+		this.setState({
 			selectedTile: id
 		});
 	}
-	
+
+	showLevelsOption(level) {
+		this.setState({
+			showLevels: true,
+			showControls: false
+		});
+	}
+
+	hideErrorsInfo() {
+		this.setState({ 
+			showErrorsInfo: false 
+		});
+	}
+
 	render() {
 		return (
 			<div
 				className="App"
 			>
 				<h1>Sudoku App</h1>
-				
 				<Board
 					dummy={this.state.isDummyBoard}
 					initialBoard={this.state.initialBoard}
 					sudoku={this.state.board}
 					onChange={this.inputNumber}
-					onClick={() => this.setState({ showErrorsInfo: false })}
+					onClick={this.hideErrorsInfo}
 					handleSelectTile={this.handleSelectTile}
 					selectedTile={this.state.selectedTile}
 				/>
-				<div className="controls">
-					<button
-						onClick={this.checkSudoku}
-						disabled={this.state.isDisabledCheckButton}
-					>
-						Check
-					</button>
-					<button
-						onClick={this.generateSudoku}
-						>
-						New Game
-					</button>
-					<button
-						onClick={this.solveGame}
-						disabled={this.state.isDisabledSolveButton}
-						>
-						Solve
-					</button>
-					<button
-						onClick={this.resetGame}
-						disabled={this.state.isDisabledRestartButton}
-					>
-						Restart
-					</button>
-				</div>
+				<Controls
+					visible={this.state.showControls}
+					checkSudoku={this.checkSudoku}
+					isDisabledCheckButton={this.state.isDisabledCheckButton}
+					showLevelsOption={this.showLevelsOption}
+					solveGame={this.solveGame}
+					isDisabledSolveButton={this.state.isDisabledSolveButton}
+					resetGame={this.resetGame}
+					isDisabledRestartButton={this.state.isDisabledRestartButton}
+				/>
+				<Levels
+					visible={this.state.showLevels}
+					level={this.generateSudoku}
+				/>
 				<div className="status">
 					{
 						this.showCheckStatus()
 					}
 				</div>
-				
 			</div>
 		);
 	}
